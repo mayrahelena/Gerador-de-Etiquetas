@@ -1,0 +1,244 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'sans-serif', Tahoma, Geneva, Verdana, Segoe UI ;
+  line-height: 1;
+}
+
+/* Container principal */
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Título */
+.titulo {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-size: 2rem;
+}
+
+/* Caixa de texto */
+.inputTexto {
+  width: 80%;
+  display: block; /* flex não é necessário aqui */
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 0 auto 1rem auto; /* Centraliza horizontalmente */
+  font-size: 1rem;
+  resize: vertical;
+}
+
+/* Botões */
+.botoes {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.botaoAzul,
+.botaoVerde {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botaoAzul {
+  background-color: #007bff;
+}
+
+.botaoAzul:hover {
+  background-color: #0056b3;
+}
+
+.botaoVerde {
+  background-color: #28a745;
+}
+
+.botaoVerde:hover {
+  background-color: #1e7e34;
+}
+
+/* Folha A4 - Paisagem */
+.folhaA4 {
+  width: 29.7cm;
+  height: 21cm;
+  padding: 0.5cm;
+  margin: 0 auto;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.gradeEtiquetas {
+  display: grid;
+  grid-template-columns: repeat(4, 7cm);
+  grid-template-rows: repeat(6, 3.33cm);
+  gap: 0;
+}
+
+/* Estilo individual da etiqueta */
+.etiqueta {
+  background-color: #FFD700; /* Amarelo forte */
+  padding: 0.2cm;
+  border: 1px dashed black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 12px;
+  overflow: hidden;
+  position: relative; 
+}
+
+/* Nome do Produto */
+.nomeProduto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 400;
+  width: 100%;
+  height: 45%;
+  text-align: center;
+  color: black;
+}
+
+/* Área inferior da etiqueta */
+.areaInferior {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 55%;
+  width: 100%;
+  padding: 2px;
+}
+
+/* Área esquerda - Código */
+.areaCodigo {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Área direita - Preço */
+.areaPreco {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Código de barras SVG */
+.codigoBarras {
+  width: 100%;
+  height: 30px;
+  margin: 2px 0;
+}
+
+/* Número do código abaixo do código de barras */
+.numeroCodigo {
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 2px;
+  background-color: transparent;
+  color: black;
+}
+
+/* Código interno */
+.codigoInterno {
+  font-size: 9px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 5px;
+  color: black;
+}
+
+/* Texto R$ */
+.cifrao {
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 2px;
+  color: black;
+  background-color: transparent;
+}
+
+/* Valor do produto */
+.precoProduto {
+  font-size: 36px;
+  font-weight: bold;
+  color: black;
+  background-color: transparent;
+}
+
+/* Impressão */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  html, body {
+    width: 297mm;
+    height: 210mm;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    zoom: 1.2; /* Ajuste de escala para impressão */
+  }
+
+  .folhaA4 {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 0;
+    box-sizing: border-box;
+    page-break-after: always;
+    break-before: page;
+    page-break-inside: avoid;
+  }
+
+  .etiqueta {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 1px dotted yellow;
+    overflow: hidden;
+  }
+
+  .inputTexto, .botoes, .titulo {
+    display: none;
+  }
+
+  .container {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+}
