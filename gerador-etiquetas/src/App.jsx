@@ -32,7 +32,6 @@ function App() {
 
   // Preenche etiquetas para múltiplas páginas
   const etiquetasCompletas = [...etiquetas];
-
   while (etiquetasCompletas.length % totalEtiquetas !== 0) {
     etiquetasCompletas.push({ codigo: "", nome: "", preco: "" });
   }
@@ -101,10 +100,21 @@ function App() {
               const isCodigoValido = /^[0-9]{13}$/.test(codigo);
               const globalIndex = pageIndex * totalEtiquetas + index;
 
+              // ALTERAÇÃO: Condicional para etiquetas vazias ficarem totalmente em branco
+              const isVazia =
+                !item.codigo && !item.nome && !item.preco;
+
+              if (isVazia) {
+                // Se a etiqueta está vazia, retorna só o contêiner amarelo sem conteúdo
+                return (
+                  <div key={globalIndex} className="etiqueta"></div>
+                );
+              }
+
+              // Mantém o conteúdo padrão para etiquetas preenchidas
               return (
                 <div key={globalIndex} className="etiqueta">
                   <div className="nomeProduto">{item.nome}</div>
-
                   <div className="areaInferior">
                     <div className="areaCodigo">
                       {isCodigoValido ? (
@@ -118,15 +128,13 @@ function App() {
                         </div>
                       )}
                     </div>
-
                     <div className="areaPreco">
                       <div className="cifrao">R$</div>
                       <div className="precoProduto">
-                      {item.preco && `${item.preco}`}
+                        {item.preco && `${item.preco}`}
                       </div>
                     </div>
                   </div>
-
                 </div>
               );
             })}
