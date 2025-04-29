@@ -22,6 +22,11 @@ function App() {
     setEtiquetas(dados);
   };
 
+  const limparCampos = () => {
+    setInput("");        // Limpa o textarea
+    setEtiquetas([]);   // Limpa as etiquetas geradas
+  };
+
   // Função para imprimir
   const imprimir = () => {
     window.print();
@@ -86,6 +91,9 @@ function App() {
       <div className="botoes">
         <button className="botaoAzul" onClick={gerarEtiquetas}>
           Gerar Etiquetas
+        </button>
+        <button className="botaoVermelho" onClick={limparCampos}>
+          Limpar Campos
         </button>
         <button className="botaoVerde" onClick={imprimir}>
           Imprimir
