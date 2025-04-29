@@ -6,42 +6,63 @@ function App() {
   const [input, setInput] = useState("");
   const [etiquetas, setEtiquetas] = useState([]);
 
-  // Gera as etiquetas a partir do input
   const gerarEtiquetas = () => {
     const linhas = input.trim().split("\n");
-    const dados = linhas.map((linha) => {
-      const partes = linha.split("\t");
-      return {
-        codigo: partes[0] || "",
-        nome: partes[1] || "",
-        preco: partes[2]
-          ? parseFloat(partes[2].replace(",", ".")).toFixed(2).replace(".", ",")
-          : "",
-      };
+    const dados = [];
+    const mensagensDeErro = [];
+
+    linhas.forEach((linha, index) => {
+      const partes = linha.trim().split(/\s+/);
+      let codigo = "", nome = "", preco = "";
+
+      const ultimaParte = partes[partes.length - 1];
+      if (/^\d+([.,]\d{1,2})?$/.test(ultimaParte)) {
+        preco = parseFloat(ultimaParte.replace(",", "."))
+          .toFixed(2)
+          .replace(".", ",");
+        partes.pop();
+      }
+
+      if (partes.length > 0 && /^\d+$/.test(partes[0])) {
+        codigo = partes.shift();
+      }
+
+      nome = partes.join(" ");
+
+      const faltando = [];
+      if (!codigo) faltando.push("código");
+      if (!nome) faltando.push("nome");
+      if (!preco) faltando.push("preço");
+
+      if (faltando.length > 0) {
+        mensagensDeErro.push(`Linha ${index + 1}: faltando ${faltando.join(", ")}`);
+      }
+
+      dados.push({ codigo, nome, preco });
     });
+
     setEtiquetas(dados);
+
+    if (mensagensDeErro.length > 0) {
+      alert("Algumas etiquetas foram geradas com dados incompletos:\n\n" + mensagensDeErro.join("\n"));
+    }
   };
 
   const limparCampos = () => {
-    setInput("");        // Limpa o textarea
-    setEtiquetas([]);   // Limpa as etiquetas geradas
+    setInput("");
+    setEtiquetas([]);
   };
 
-  // Função para imprimir
   const imprimir = () => {
     window.print();
   };
 
-  // Número de etiquetas por página
   const totalEtiquetas = 24;
-
-  // Preenche etiquetas para múltiplas páginas
   const etiquetasCompletas = [...etiquetas];
   while (etiquetasCompletas.length % totalEtiquetas !== 0) {
     etiquetasCompletas.push({ codigo: "", nome: "", preco: "" });
   }
 
-  // Função que divide em páginas de 24
   const dividirEmPaginas = (etiquetas, tamanhoPagina = 24) => {
     const paginas = [];
     for (let i = 0; i < etiquetas.length; i += tamanhoPagina) {
@@ -50,7 +71,6 @@ function App() {
     return paginas;
   };
 
-  // Gera o código de barras usando a biblioteca JsBarcode
   const gerarCodigoBarras = () => {
     etiquetasCompletas.forEach((item, index) => {
       const codigo = item.codigo.trim();
@@ -65,28 +85,38 @@ function App() {
             lineColor: "#000000",
           });
         } catch (error) {
-          console.error(`Erro ao gerar código de barras para o código: ${codigo}, error`);
+          console.error(`Erro ao gerar código de barras para o código: ${codigo}`, error);
         }
       }
     });
   };
 
-  // Regenerar códigos de barras sempre que mudar etiquetas
   useEffect(() => {
     gerarCodigoBarras();
   }, [etiquetas]);
+
+  const linhasTexto = input.split("\n");
 
   return (
     <div className="container">
       <h1 className="titulo">Gerador de Etiquetas</h1>
 
-      <textarea
-        rows={8}
-        className="inputTexto"
-        placeholder="Cole os dados aqui no formato: CÓDIGO[TAB]NOME[TAB]PREÇO (apenas xx,xx)"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      ></textarea>
+      <div className="editor-container">
+        <div className="linhas">
+          {linhasTexto.map((_, index) => (
+            <div key={index} className="linha-numero">
+              {index + 1}
+            </div>
+          ))}
+        </div>
+        <textarea
+          rows={10}
+          className="inputTexto"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Insira os dados do produto (ex: 74562587 Biscoito 3,50)"
+        />
+      </div>
 
       <div className="botoes">
         <button className="botaoAzul" onClick={gerarEtiquetas}>
@@ -108,18 +138,12 @@ function App() {
               const isCodigoValido = /^[0-9]{13}$/.test(codigo);
               const globalIndex = pageIndex * totalEtiquetas + index;
 
-              // ALTERAÇÃO: Condicional para etiquetas vazias ficarem totalmente em branco
-              const isVazia =
-                !item.codigo && !item.nome && !item.preco;
+              const isVazia = !item.codigo && !item.nome && !item.preco;
 
               if (isVazia) {
-                // Se a etiqueta está vazia, retorna só o contêiner amarelo sem conteúdo
-                return (
-                  <div key={globalIndex} className="etiqueta"></div>
-                );
+                return <div key={globalIndex} className="etiqueta"></div>;
               }
 
-              // Mantém o conteúdo padrão para etiquetas preenchidas
               return (
                 <div key={globalIndex} className="etiqueta">
                   <div className="nomeProduto">{item.nome}</div>
@@ -138,9 +162,7 @@ function App() {
                     </div>
                     <div className="areaPreco">
                       <div className="cifrao">R$</div>
-                      <div className="precoProduto">
-                        {item.preco && `${item.preco}`}
-                      </div>
+                      <div className="precoProduto">{item.preco}</div>
                     </div>
                   </div>
                 </div>

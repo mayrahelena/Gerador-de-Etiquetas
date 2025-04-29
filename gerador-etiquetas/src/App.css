@@ -12,15 +12,16 @@
 body {
   background: linear-gradient(135deg, #f8fafc 0%, #e3e8ee 100%);
   min-height: 100vh;
+  min-width: 100wh;
   font-family: 'Poppins', Inter, Rubik, Tahoma, Geneva, Verdana, Segoe UI, sans-serif;
 }
 
 /* Container principal */
 .container {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 2rem 1rem;
-  background: #fff;
+  max-width: 100vw;
+  margin: 2rem;
+  padding: 2rem;
+  background: #dedee4;
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(44, 62, 80, 0.15);
   display: flex;
@@ -33,40 +34,62 @@ body {
 .titulo {
   text-align: center;
   margin-bottom: 1rem;
-  color: #285789;
+  color: #234870;
   font-size: 3rem;
   font-weight: 600;
   letter-spacing: 1px;
   text-shadow: 0 2px 8px rgba(44,62,80,0.08);
 }
 
-/* Caixa de texto */
-.inputTexto {
+.editor-container {
+  display: flex;
   width: 90%;
-  min-height: 120px;
-  padding: 1rem;
-  border: 2.5px solid #e0e7ef;
+  max-width: 900px;
+  background: transparent;
   border-radius: 12px;
-  margin: 0 auto 1rem auto;
-  font-size: 1.1rem;
-  background: #f8fafc;
-  box-shadow: 0 2px 8px rgba(44,62,80,0.04);
-  transition: border-color 0.2s;
-  
-  /*
-  width: 90%;
-  display: block;
-  padding: 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin: 0 auto 1rem auto;
+  font-family: monospace; /* Mantém alinhamento consistente */
   font-size: 1rem;
-  resize: vertical; */
+  line-height: 1.5rem;
+  overflow-y: hidden;
+  border: none;
+  outline: none; /* também remove o contorno ao focar */
+  resize: none;  /* opcional: remove o canto de redimensionamento */
 }
 
-.inputTexto:focus {
-  border-color: #99a1aa;
-  outline: none;
+/* Números da linha */
+.linhas {
+  background: #eef2f7;
+  padding: 0.8rem;
+  text-align: right;
+  user-select: none;
+  /* font-size: 1rem; */
+  color: #666;  
+  border-right: 1px solid #ccc;
+}
+
+/* Cada número individual */
+.linha-numero {
+  height: 1.5rem; /* deve bater com line-height */
+  line-height: 1.5rem;
+  font-family: monospace; /* Mantém alinhamento consistente */
+  font-size: 1rem;
+  line-height: 1.5rem
+}
+
+/* Caixa de texto */
+.inputTexto {
+  width: 90vw;  
+  padding: 0.8rem;
+  border: 0;  
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5rem;  
+  background: #d5e6f6;
+  overflow-y: hidden;
+  border: none;
+  outline: none; /* também remove o contorno ao focar */
+  resize: none;  /* opcional: remove o canto de redimensionamento */
+  border-radius: 0 12px 12px 0;
 }
 
 /* Botões */
@@ -128,8 +151,7 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(44,62,80,0.10);
-  
+  box-shadow: 0 4px 16px rgba(44,62,80,0.10); 
 }
 
 /* Grade de etiquetas */
@@ -151,7 +173,6 @@ body {
   font-size: 13px;
   overflow: hidden;
   position: relative;
-  
 }
 
 /* Nome do Produto */
@@ -273,7 +294,7 @@ body {
     overflow: hidden;
   }
 
-  .inputTexto, .botoes, .titulo {
+  .inputTexto, .botoes, .titulo, .editor-container {
     display: none;
   }
 
@@ -284,3 +305,4 @@ body {
     margin: 0;
   }
 }
+
