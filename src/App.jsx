@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import JsBarcode from "jsbarcode";
 import "./App.css";
-<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
 
 function App() {
   const [input, setInput] = useState("");
