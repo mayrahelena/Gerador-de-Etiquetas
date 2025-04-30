@@ -260,6 +260,22 @@ body {
   background-color: transparent;
 }
 
+@media screen and (max-width: 400px) {
+  .botoes {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem; /* Ajusta o espaçamento entre os botões na vertical */
+  }
+
+  .botaoAzul,
+  .botaoVerde,
+  .botaoVermelho {
+    width: 80%; /* Faz os botões ocuparem uma largura agradável na tela menor */
+    justify-content: center;
+    min-height: 4rem;
+  }
+}
+
 /* Impressão */
 @media print {
   @page {
