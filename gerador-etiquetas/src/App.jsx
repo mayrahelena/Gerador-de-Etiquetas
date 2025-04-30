@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import JsBarcode from "jsbarcode";
 import "./App.css";
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
 function App() {
   const [input, setInput] = useState("");
@@ -35,7 +36,7 @@ function App() {
       if (!preco) faltando.push("preço");
 
       if (faltando.length > 0) {
-        mensagensDeErro.push(`Linha ${index + 1}: faltando ${faltando.join(", ")}`);
+        mensagensDeErro.push(`Linha ${index + 1}: Faltando ${faltando.join(", ")}`);
       }
 
       dados.push({ codigo, nome, preco });
