@@ -1,6 +1,7 @@
 {
   "name": "gerador-etiquetas",
   "version": "1.0.0",
+  
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -14,8 +15,5 @@
   },
   "devDependencies": {
     "vite": "^5.4.19"
-  },
-  "scripts": {
-  "postinstall": "chmod -R +x node_modules/.bin"
   }
 }
