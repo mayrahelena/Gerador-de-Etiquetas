@@ -90,6 +90,6 @@ Você pode conectar diretamente seu repositório do GitHub à [Vercel](https://v
 
 ## 📄 Licença
 
-Este projeto está sob a licença **MIT**.  
-Desenvolvido com 💡 por **Mayra Oliveira**.
+Este projeto está licenciado sob a licença [MIT](LICENSE). 
+Criado e mantido por [Mayra Oliveira](https://github.com/mayrahelena).
 
